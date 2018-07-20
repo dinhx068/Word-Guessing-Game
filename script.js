@@ -1,5 +1,6 @@
 // VARIABLES
 // ==========================================================
+
 var alphabet = ['a','b','c','d','e','f','g','h','i','j','k',
 'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
@@ -28,11 +29,34 @@ var guessesRemaining = 12;
 // FUNCTIONS
 // ==========================================================
 
+
 function gameStatus() {
-    console.log("Wins: " + wins);
-    console.log("Word to guess index: " + wordToGuessIndex);
+    //console.log("Wins: " + wins);
+    //console.log("Word to guess index: " + wordToGuessIndex);
     document.getElementById("lettersGuessed").innerHTML = lettersGuessedArray;
-    console.log("Guesses remaining: " + guessesRemaining);
+    //console.log("Guesses remaining: " + guessesRemaining);
+}
+
+/*function checkInput(userInput) {
+    var letters = /^[a-zA-Z]+$/;
+    if((userInput.value.match(letters))) {
+        console.log("input success");
+        return true;
+    } else {
+        console.log("input failed");
+        return false;
+    }
+} */
+
+function checkInput(userInput) {
+    var regex = /[a-zA-Z]/;
+    if (userInput.match(regex)){
+        console.log("input success");
+        return true;
+    } else {
+        console.log("input failed");
+        return false;
+    }
 }
 
 function lettersGuessed(userInput) {
@@ -56,7 +80,7 @@ document.onkeyup = function(event) {
   var userInput = event.key.toLowerCase();
 
     // Only run this code if "t" or "f" were pressed.
-    if (userInput === "t" || userInput === "f") {
+    if (checkInput(userInput)) {
         console.log("testing user input");
         lettersGuessed(userInput);
         gameStatus();
