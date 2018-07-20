@@ -26,23 +26,14 @@ var guessesRemaining = 10;
 // ==========================================================
 
 function gameStatus() {
+    document.getElementById("lettersGuessed").innerHTML = lettersGuessedArray;
+    document.getElementById("guessesRemaining").innerHTML = guessesRemaining;
     //console.log("Wins: " + wins);
     //console.log("Word to guess index: " + wordToGuessIndex);
-    document.getElementById("lettersGuessed").innerHTML = lettersGuessedArray;
     //console.log("Guesses remaining: " + guessesRemaining);
     console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
 }
 
-/*function checkInput(userInput) {
-    var letters = /^[a-zA-Z]+$/;
-    if((userInput.value.match(letters))) {
-        console.log("input success");
-        return true;
-    } else {
-        console.log("input failed");
-        return false;
-    }
-} */
 // Character codes, https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 function checkInput(userInput) {
     var charCode = (userInput.which) ? userInput.which : event.keyCode
@@ -56,8 +47,15 @@ function checkInput(userInput) {
 }
 
 function lettersGuessed(userInput) {
-    lettersGuessedArray.push(userInput);
-
+    if (lettersGuessedArray.includes(userInput)) {
+        // DO NOTHING, if key was already pressed
+        //console.log("TRUE, IS in the array");
+    } else {
+        // Add to array if letter has not been pressed yet
+        //console.log("FALSE, NOT in the array");
+        lettersGuessedArray.push(userInput);
+        guessesRemaining = guessesRemaining - 1 ;
+    }
 }
 
 // MAIN
