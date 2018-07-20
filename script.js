@@ -1,17 +1,13 @@
 // VARIABLES
 // ==========================================================
-
-var alphabet = ['a','b','c','d','e','f','g','h','i','j','k',
-'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-
 var wins = 0;
 
-var wordToGuess = [''];
+var wordToGuess = [];
 var wordToGuessIndex = 0;
 
-var lettersGuessedArray = [''];
+var lettersGuessedArray = [];
 
-var guessesRemaining = 12;
+var guessesRemaining = 10;
 
 
 /* GAME PSUEDO CODE
@@ -29,12 +25,12 @@ var guessesRemaining = 12;
 // FUNCTIONS
 // ==========================================================
 
-
 function gameStatus() {
     //console.log("Wins: " + wins);
     //console.log("Word to guess index: " + wordToGuessIndex);
     document.getElementById("lettersGuessed").innerHTML = lettersGuessedArray;
     //console.log("Guesses remaining: " + guessesRemaining);
+    console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
 }
 
 /*function checkInput(userInput) {
@@ -47,20 +43,21 @@ function gameStatus() {
         return false;
     }
 } */
-
+// Character codes, https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 function checkInput(userInput) {
-    var regex = /[a-zA-Z]/;
-    if (userInput.match(regex)){
-        console.log("input success");
-        return true;
-    } else {
-        console.log("input failed");
+    var charCode = (userInput.which) ? userInput.which : event.keyCode
+    if (charCode < 58) {
+       return false;
+    } else if (charCode > 90) {
         return false;
+    } else {
+    return true;
     }
 }
 
 function lettersGuessed(userInput) {
     lettersGuessedArray.push(userInput);
+
 }
 
 // MAIN
@@ -79,7 +76,7 @@ document.onkeyup = function(event) {
 
   var userInput = event.key.toLowerCase();
 
-    // Only run this code if "t" or "f" were pressed.
+    // Only run this code if letters in the alphabet were pressed
     if (checkInput(userInput)) {
         console.log("testing user input");
         lettersGuessed(userInput);
