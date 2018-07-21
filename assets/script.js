@@ -1,8 +1,43 @@
 // VARIABLES
 // ==========================================================
+
 var wins = 0;
 
-var wordToGuess = [];
+var wordToGuess = [
+"Avatar: The Last Airbender",
+"Breaking Bad",
+"Caillou",
+"Code Geass",
+"Courage the Cowardly Dog",
+"Death Note",
+"Dexter's Laboratory",
+"Digimon Frontier",
+"Dragon Ball Z",
+"Dragon Tales",
+"Family Guy",
+"Gravity Falls",
+"Jackie Chan Adventures",
+"King of the Hill",
+"Kim Possible",
+"Looney Tunes",
+"Made in Abyss",
+"Neon Genesis Evangelion",
+"Pokemon",
+"Popeye the Sailor",
+"Rugrats",
+"Scooby-Doo",
+"Simpsons",
+"South Park",
+"SpongeBob SquarePants",
+"Steins;Gate",
+"Teenage Mutant Ninja Turtles",
+"Teen Titans",
+"The Fairly OddParents",
+"The Flintstones",
+"Tom and Jerry",
+"Yu-Gi-Oh"
+];
+
 var wordToGuessIndex = 0;
 
 var lettersGuessedArray = [];
@@ -30,8 +65,13 @@ function gameStatus() {
     document.getElementById("guessesRemaining").innerHTML = guessesRemaining;
     //console.log("Wins: " + wins);
     //console.log("Word to guess index: " + wordToGuessIndex);
-    //console.log("Guesses remaining: " + guessesRemaining);
     console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
+}
+
+// Generates a random number from 0-29 to return a random tv show
+function chooseRandomWord() {
+    var randNum = Math.floor((Math.random() * 32) + 0);
+    return wordToGuess[randNum];
 }
 
 // Character codes, https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
@@ -48,11 +88,9 @@ function checkInput(userInput) {
 
 function lettersGuessed(userInput) {
     if (lettersGuessedArray.includes(userInput)) {
-        // DO NOTHING, if key was already pressed
-        //console.log("TRUE, IS in the array");
+        // DO NOTHING, if letter is already in array
     } else {
         // Add to array if letter has not been pressed yet
-        //console.log("FALSE, NOT in the array");
         lettersGuessedArray.push(userInput);
         guessesRemaining = guessesRemaining - 1 ;
     }
@@ -60,9 +98,10 @@ function lettersGuessed(userInput) {
 
 // MAIN
 // ==========================================================
-/*updateWins();
-renderWordToGuess();
+/*renderWordToGuess();
 renderLettersGuessed();*/
+
+var randWord = chooseRandomWord();
 
 // When the user presses a key, it will run the following function...
 document.onkeyup = function(event) {
@@ -79,6 +118,7 @@ document.onkeyup = function(event) {
         console.log("testing user input");
         lettersGuessed(userInput);
         gameStatus();
+        console.log(randWord);
     } else {
         console.log("not apart of the alphabet");
     }
