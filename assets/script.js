@@ -1,61 +1,50 @@
 // VARIABLES
 // ==========================================================
 
-var wins = 0;
-
 var wordToGuess = [
-"Avatar: The Last Airbender",
-"Breaking Bad",
-"Caillou",
-"Code Geass",
-"Courage the Cowardly Dog",
-"Death Note",
-"Dexter's Laboratory",
-"Digimon Frontier",
-"Dragon Ball Z",
-"Dragon Tales",
-"Family Guy",
-"Gravity Falls",
-"Jackie Chan Adventures",
-"King of the Hill",
-"Kim Possible",
-"Looney Tunes",
-"Made in Abyss",
-"Neon Genesis Evangelion",
-"Pokemon",
-"Popeye the Sailor",
-"Rugrats",
-"Scooby-Doo",
-"Simpsons",
-"South Park",
-"SpongeBob SquarePants",
-"Steins;Gate",
-"Teenage Mutant Ninja Turtles",
-"Teen Titans",
-"The Fairly OddParents",
-"The Flintstones",
-"Tom and Jerry",
-"Yu-Gi-Oh"
+"avatar: yhe last airbender",
+"breaking bad",
+"caillou",
+"code geass",
+"courage the cowardly dog",
+"death note",
+"dexter's laboratory",
+"digimon frontier",
+"dragon ball z",
+"dragon tales",
+"family guy",
+"gravity falls",
+"jackie chan adventures",
+"king of the hill",
+"kim possible",
+"looney tunes",
+"made in abyss",
+"neon genesis evangelion",
+"pokemon",
+"popeye the sailor",
+"rugrats",
+"scooby-doo",
+"simpsons",
+"south park",
+"spongebob squarePants",
+"steins;gate",
+"teenage mutant ninja turtles",
+"teen titans",
+"the fairly oddParents",
+"the flintstones",
+"tom and jerry",
+"yu-gi-oh"
 ];
 
-var wordToGuessIndex = 0;
+var chosenWord = wordToGuess[Math.floor(Math.random() * wordToGuess.length)]; // Random word
+console.log(chosenWord);
 
+var wins = 0;
+var str;
+
+var underScoreArray = [];
 var lettersGuessedArray = [];
-
 var guessesRemaining = 10;
-
-
-/* GAME PSUEDO CODE
-// ==========================================================
-1. Get random word for user to guess
-2. Take in user input from keyboard
-3. Compare input to current word index
-    right, wordToGuessIndex + 1 & add letter to lettersGuessed[]
-    wrong, guessesRemaining - 1 & add letter to lettersGuessed[]
-        if guessesRemaining = 0, game ends and game restarts
-4. Go back to step 2 until wordToGuess[] is empty?
-5. Wins + 1 and game restarts
-*/
 
 // FUNCTIONS
 // ==========================================================
@@ -68,10 +57,30 @@ function gameStatus() {
     console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
 }
 
-// Generates a random number from 0-29 to return a random tv show
-function chooseRandomWord() {
-    var randNum = Math.floor((Math.random() * 32) + 0);
-    return wordToGuess[randNum];
+function underScores() {
+    for (var i = 0; i < chosenWord.length; i++) {
+        underScoreArray[i] = "_"; // answerArray
+    }
+    str = underScoreArray.join("");
+    document.getElementById("answer").innerHTML = str;
+}
+
+function addInOtherCharacters() {
+    for (var i = 0; i < chosenWord.length; i++) {
+        if (chosenWord[i] == " "){
+            underScoreArray[i] = " ";
+
+        } else if (chosenWord[i] == "'"){
+            underScoreArray[i] = "'";
+
+        } else if (chosenWord[i] == ";"){
+            underScoreArray[i] = ";";
+
+        } else if (chosenWord[i] == "-"){
+            underScoreArray[i] = "-";
+        }
+    }
+    document.getElementById("answer").innerHTML = underScoreArray.join(" ");
 }
 
 // Character codes, https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
@@ -86,13 +95,28 @@ function checkInput(userInput) {
     }
 }
 
+
 function lettersGuessed(userInput) {
-    if (lettersGuessedArray.includes(userInput)) {
-        // DO NOTHING, if letter is already in array
+    if (chosenWord.includes(userInput)) {
+        if (lettersGuessedArray.includes(userInput.toUpperCase())) {
+            // DO NOTHING, if letter is already guessed
+        } else {
+            // Add userInput to the underScores array to display on screen
+            for (var i = 0; i < chosenWord.length; i++) {
+                if (chosenWord[i] === userInput) {
+                    underScoreArray[i] = userInput.toUpperCase();
+                } else { 
+                    // DO NOTHING when not matching
+                }
+            }
+        document.getElementById("answer").innerHTML = underScoreArray.join(" ");
+        lettersGuessedArray.push(userInput.toUpperCase());
+        } // End of if statement LINE 83
+    } else if (lettersGuessedArray.includes(userInput.toUpperCase())) {
+    // DO NOTHING, if letter is already guessed
     } else {
-        // Add to array if letter has not been pressed yet
-        lettersGuessedArray.push(userInput);
-        guessesRemaining = guessesRemaining - 1 ;
+        lettersGuessedArray.push(userInput.toUpperCase());
+        guessesRemaining = guessesRemaining - 1;
     }
 }
 
@@ -101,7 +125,8 @@ function lettersGuessed(userInput) {
 /*renderWordToGuess();
 renderLettersGuessed();*/
 
-var randWord = chooseRandomWord();
+underScores();
+addInOtherCharacters();
 
 // When the user presses a key, it will run the following function...
 document.onkeyup = function(event) {
@@ -118,7 +143,6 @@ document.onkeyup = function(event) {
         console.log("testing user input");
         lettersGuessed(userInput);
         gameStatus();
-        console.log(randWord);
     } else {
         console.log("not apart of the alphabet");
     }
