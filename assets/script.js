@@ -44,7 +44,7 @@ var wordToGuess = [
     
     var underScoreArray = [];
     var lettersGuessedArray = [];
-    var guessesRemaining = 10;
+    var guessesRemaining = 8;
     
     // FUNCTIONS
     // ==========================================================
@@ -56,7 +56,7 @@ var wordToGuess = [
             if (proceed == true) {
             underScoreArray = [];
             lettersGuessedArray = [];
-            guessesRemaining = 10;
+            guessesRemaining = 8;
             chosenWord = wordToGuess[Math.floor(Math.random() * wordToGuess.length)];
             underScores();
             addInOtherCharacters();
@@ -154,7 +154,7 @@ var wordToGuess = [
                     $("#hidden").show();
                     $("#container").hide();
                     reset();
-                    guessesRemaining = -1;
+                    guessesRemaining -= 1;
                 }
         } else {
             // Do nothing here until game has been won
@@ -164,7 +164,7 @@ var wordToGuess = [
     function reset() {
         underScoreArray = [];
         lettersGuessedArray = [];
-        guessesRemaining = 10;
+        guessesRemaining = 8;
         chooseNewWord();
         console.log("Word to guess: " + chosenWord);
         console.log("Total words left in array " + wordToGuess.length);
