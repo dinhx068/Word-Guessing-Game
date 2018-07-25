@@ -64,13 +64,18 @@ var wordToGuess = [
             console.log("Total words left in array " + wordToGuess.length);
             } else {
                 alert("Thanks for playing");
+                // NEEDS TO STOP/EXIT
+                $("#hidden").show();
+                $("#container").hide();
+                reset();
+                guessesRemaining = -1;
                 break;
             }
         }
 
         document.getElementById("lettersGuessed").innerHTML = lettersGuessedArray;
         document.getElementById("guessesRemaining").innerHTML = guessesRemaining;
-        console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
+        //console.log("length of lettersGuessedArray:" + lettersGuessedArray.length);
     }
     
     function underScores() {
@@ -145,7 +150,11 @@ var wordToGuess = [
                 if (proceed == true) {
                     reset();
                 } else {
-
+                    // NEEDS TO STOP/EXIT
+                    $("#hidden").show();
+                    $("#container").hide();
+                    reset();
+                    guessesRemaining = -1;
                 }
         } else {
             // Do nothing here until game has been won
@@ -189,7 +198,6 @@ var wordToGuess = [
     
         // Only run this code if letters in the alphabet were pressed
         if (checkInput(userInput)) {
-            console.log("testing user input");
             lettersGuessed(userInput);
             gameStatus();
         } else {
